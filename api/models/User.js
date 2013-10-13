@@ -14,7 +14,6 @@ module.exports = {
   	password: 'string',
   	email: 'string',
   	subdomain: 'string',
-  	created: 'datetime',
   	role: 'string',
   	settings: 'json',
    
