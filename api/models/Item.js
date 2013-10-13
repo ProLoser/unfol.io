@@ -2,7 +2,7 @@
  * Item
  *
  * @module      :: Model
- * @description :: A short summary of how this model works and what it represents.
+ * @description :: The core collection of objects in unfol.io
  * @docs		:: http://sailsjs.org/#!documentation/models
  */
 
@@ -10,9 +10,13 @@ module.exports = {
 
   attributes: {
   	
-  	/* e.g.
-  	nickname: 'string'
-  	*/
+  	name: 'string',
+  	type: 'string',
+  	user_id: 'string',
+  	category_id: 'string',
+  	related: 'json',
+  	created: 'datetime',
+  	published: 'boolean'
     
   }
 

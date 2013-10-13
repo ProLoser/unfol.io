@@ -10,10 +10,22 @@ module.exports = {
 
   attributes: {
   	
-  	/* e.g.
-  	nickname: 'string'
-  	*/
-    
+  	name: 'string',
+  	password: 'string',
+  	email: 'string',
+  	subdomain: 'string',
+  	created: 'datetime',
+  	role: 'string',
+  	settings: 'json',
+   
+
+	  // Override toJSON instance method
+	  // to remove password value
+	  toJSON: function() {
+	    var obj = this.toObject();
+	    delete obj.password;
+	    return obj;
+	  } 
   }
 
 };

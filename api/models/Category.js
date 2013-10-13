@@ -10,9 +10,9 @@ module.exports = {
 
   attributes: {
   	
-  	/* e.g.
-  	nickname: 'string'
-  	*/
+  	name: 'string',
+  	type: 'string',
+  	user_id: 'string'
     
   }
 
