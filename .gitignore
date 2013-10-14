@@ -42,6 +42,8 @@ assets/bower_components
 .netbeans
 nbproject
 .idea
+assets/.sass-cache/
+assets/styles/unfolio/.sass-cache
 
 
 ########################

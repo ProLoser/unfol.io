@@ -8,24 +8,43 @@
 		
 		
 		<!-- CSS -->
-		<!--<link rel="stylesheet/less" type="text/css" href="assets/bower_components/bootstrap.less"/>-->
 		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/less/bootstrap.css"/>
-		<!--<link rel="stylesheet" type="text/css" href="styles/reset.scss"/> -->
+		<link href="styles/unfolio/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+		<link href="styles/unfolio/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
+		<!--[if IE]>
+			<link href="styles/unfolio/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+		<![endif]-->
 	</head>
-	<body class="container">
-		<header class="row">
-			<div class="logo col-sm-3">UNFOL.IO</div>
-			<nav class="col-sm-9">
-				<a href="#">Home</a>
-				<a href="#">My Profile</a>
-				<a href="#">Nav Item 3</a>
-				<a href="#">Nav Item 4</a>
-				<a href="#">Nav Item 5</a>
-			</nav>
+	<body>
+		<header>
+			<div class="container">
+				<div class="row">
+					<div class="logo col-sm-3">UNFOL.IO</div>
+					<nav class="col-sm-9">
+						<a href="#">Home</a>
+						<a href="#/user">User Module</a>
+						<a href="#/item">Item Module</a>
+						<a href="#/category">Category Module</a>
+					</nav>
+				</div>
+			</div>
 		</header>
 		
-		<div ui-view></div>
+		<div class="container content" ui-view></div>
 		
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="copyright col-sm-3">&copy; 2013 Unfol.io</div>
+					<nav class="col-sm-9">
+						<a href="#">Home</a>
+						<a href="#/user">User Module</a>
+						<a href="#/item">Item Module</a>
+						<a href="#/category">Category Module</a>
+					</nav>
+				</div>
+			</div>
+		</footer>
 		
 		<!-- ANGULAR APP-->
 		<script type="text/javascript" src="modules/unfolio.js"></script>
