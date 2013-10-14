@@ -1,32 +1,40 @@
-<html>
+<html ng-app="unfolio">
 	<head>
-		<!--BOWER DEP JS -->
+		<!--CORE DEP JS -->
 		<script type="text/javascript" src="bower_components/jquery/jquery.min.js"></script>
 		<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
-		<script type="text/javascript" src="bower_components/angular-ui-router/urlRouter.js"></script>
+		<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+		
 		
 		<!-- CSS -->
 		<!--<link rel="stylesheet/less" type="text/css" href="assets/bower_components/bootstrap.less"/>-->
-		<link rel="stylesheet" type="text/css" href="assets/bower_components/bootstrap.css"/>
-		<link rel="stylesheet" type="text/css" href="assets/styles/reset.scss"/>
+		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/less/bootstrap.css"/>
+		<!--<link rel="stylesheet" type="text/css" href="styles/reset.scss"/> -->
 	</head>
-	<body class="container-fluid">
-		<header class="container">
-			<div class="row-fluid">
-				<div class="logo span3">UNFOL.IO</div>
-				<nav class="span9">
-					<a href="#">Home</a>
-					<a href="#">My Profile</a>
-					<a href="#">Nav Item 3</a>
-					<a href="#">Nav Item 4</a>
-					<a href="#">Nav Item 5</a>
-				</nav>
-			</div>
+	<body class="container">
+		<header class="row">
+			<div class="logo col-sm-3">UNFOL.IO</div>
+			<nav class="col-sm-9">
+				<a href="#">Home</a>
+				<a href="#">My Profile</a>
+				<a href="#">Nav Item 3</a>
+				<a href="#">Nav Item 4</a>
+				<a href="#">Nav Item 5</a>
+			</nav>
 		</header>
-		<ng-view></ng-view>
 		
-		<script type="text/javascript" src="bower_components/ui-bootstrap.min.js"></script>
-		<script type="text/javascript" src="bower_components/ui-bootstrap-tpls.min.js"></script>
+		<div ui-view></div>
+		
+		
+		<!-- ANGULAR APP-->
+		<script type="text/javascript" src="modules/app.js"></script>
+		<script type="text/javascript" src="modules/user/user.js"></script>
+		<script type="text/javascript" src="modules/item/item.core.js"></script>
+		<script type="text/javascript" src="modules/item/item.js"></script>
+		<script type="text/javascript" src="modules/item/project/project.js"></script>
+		<!--BOOTSTRAP -->
+		<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+		<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 		
 	</body>
 </html>
