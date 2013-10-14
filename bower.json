@@ -1,0 +1,16 @@
+{
+  "name": "unfol.io",
+  "version": "0.0.0",
+  "homepage": "http://unfol.io",
+  "authors": [
+    "Dean Sofer <proloser@hotmail.com>",
+    "Roy Sivan <roy@guavaworks.com>"
+  ],
+  "private": true,
+  "dependencies": {
+    "angular": "angular-ui/angular#~1.1.5",
+    "angular-ui-utils": "~0.0.4",
+    "jquery": "~2.0.3",
+    "angular-ui-router": "~0.2.0"
+  }
+}

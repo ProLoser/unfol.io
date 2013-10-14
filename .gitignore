@@ -27,6 +27,11 @@ node_modules
 
 npm-debug.log
 
+########################
+# angular / bower
+########################
+assets/bower_components
+
 
 ########################
 # misc / editors
