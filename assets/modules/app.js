@@ -1,1 +1,1 @@
-angular.module('app', ['ui.router'])
+angular.module('app', ['user', 'item', 'ui.router'])

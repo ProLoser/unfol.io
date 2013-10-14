@@ -1,0 +1,1 @@
+angular.module('item.project', ['item.core', 'ui.router'])

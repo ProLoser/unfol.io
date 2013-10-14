@@ -1,0 +1,1 @@
+angular.module('item', ['item.core', 'item.project', ])

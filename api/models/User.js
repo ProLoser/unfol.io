@@ -10,7 +10,7 @@ module.exports = {
 
   attributes: {
   	
-  	name: 'string',
+  	username: 'string',
   	password: 'string',
   	email: 'string',
   	subdomain: 'string',
