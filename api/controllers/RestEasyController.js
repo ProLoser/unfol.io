@@ -15,28 +15,74 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-
-
 var resteasy = require('resteasy');
 
-var keys = {
+var gitKeys = {
 	login: '490074a2ebeecd8ff906',
 	pass: '2f7ad427fc8ae6362b400609008549feeeb9be3f'
+};
+
+var linkKeys = {
+	login: 'hm19mmytz1y3',
+	pass: 'VkPwjdK4ew0HxruC'
+};
+
+var tokens = {};
+
+var linkedinTokens = {};
+
+var callbackUrl = {
+	github: 'http://localhost:1337/RestEasy/githubCallback',
+	linkedin: 'http://localhost:1337/RestEasy/linkedinCallback', 
 }
 
-var callbackUrl = '/RestEasy/githubCallback';
+var github = resteasy('resteasy/lib/providers/github', gitKeys, callbackUrl.github);
 
-var github = resteasy('resteasy/lib/providers/github', keys);
+var linkedin = resteasy('resteasy/lib/providers/linkedin', linkKeys, callbackUrl.linkedin);
 
 module.exports = {
 
-	github : function(req, res){
-		github.connect(callbackUrl);
-	},
+	github : github.connect,
 	
 	githubCallback: function(req, res){
-		res.send('callback');
+		github.callback(req, function(error, oauth_token, oauth_token_secret, additionalParameters){
+		  tokens.oauth_token = oauth_token;
+		  tokens.oauth_token_secret = oauth_token_secret;
+		  res.send('succcess! or some shit');
+		});
+	},
+	githubQuery : function(req, res){
+		github.read(tokens, 'repos', {},  function(error, repos){
+			if(error){
+				res.send('ERROR! '+error.data);
+			} else {
+				res.send(repos);
+			}
+		});
+		
+		
+	},
 	
+	linkedin: linkedin.connect,
+	
+	linkedinCallback: function(req, res){
+		linkedin.callback(req, function(error, oauth_token, oauth_token_secret, additionalParameters){
+			linkedinTokens.oauth_token = oauth_token;
+			linkedinTokens.oauth_token_secret = oauth_token_secret;
+			res.send('success');
+		});
+	
+	},
+	
+	linkedinQuery: function(req, res){
+		console.log(linkedin.read);
+		linkedin.read(linkedinTokens, 'people', { url: 'http://www.linkedin.com/in/royboy789' }, function(error, repos){
+			if(error){
+				res.send('ERROR! '+error.data);
+			} else {
+				res.send(repos)
+			}
+		});
 	}
 	
 
