@@ -12,7 +12,7 @@
     "sails-mongo": "~0.9.5",
     "passport": "~0.1.17",
     "passport-local": "~0.1.6",
-    "resteasy": "0.0.7",
+    "resteasy": "*",
     "bcrypt": "~0.7.6"
   },
   "scripts": {
