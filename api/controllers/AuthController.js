@@ -9,7 +9,6 @@ module.exports = {
     res.view();
   },
   process: function(req, res){
-  	console.log('process');
     passport.authenticate('local', function(err, user, info) {
       if ((err) || (!user)) {
         return res.send({
