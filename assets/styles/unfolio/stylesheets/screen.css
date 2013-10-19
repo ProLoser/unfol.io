@@ -1,0 +1,84 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 9, ../sass/screen.scss */
+body {
+  background: #FFF;
+}
+
+/* line 14, ../sass/screen.scss */
+header {
+  background: #444;
+  color: #FFF;
+  border-bottom: 2px solid red;
+  margin: 0 0 10px 0;
+}
+/* line 20, ../sass/screen.scss */
+header .logo {
+  font-size: 22px;
+  margin-top: 20px;
+}
+/* line 24, ../sass/screen.scss */
+header nav {
+  text-align: right;
+}
+/* line 26, ../sass/screen.scss */
+header nav a {
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+  color: #FFF;
+  display: inline-block;
+  padding: 20px 10px;
+}
+/* line 33, ../sass/screen.scss */
+header nav a:hover {
+  background: black;
+  color: white;
+  text-decoration: none;
+  border-left: 1px solid red;
+  border-right: 1px solid red;
+}
+
+/* line 45, ../sass/screen.scss */
+div.content.container {
+  padding: 20px;
+}
+/* line 48, ../sass/screen.scss */
+div.content.container h1 {
+  font-size: 22px;
+  text-transform: uppercase;
+}
+
+/* line 54, ../sass/screen.scss */
+footer {
+  background: #444;
+  color: #FFF;
+  border-top: 2px solid red;
+  margin: 10px 0 0;
+}
+/* line 60, ../sass/screen.scss */
+footer .copyright {
+  font-size: 10px;
+  margin-top: 20px;
+}
+/* line 64, ../sass/screen.scss */
+footer nav {
+  text-align: right;
+}
+/* line 66, ../sass/screen.scss */
+footer nav a {
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+  color: #FFF;
+  display: inline-block;
+  padding: 20px 10px;
+}
+/* line 73, ../sass/screen.scss */
+footer nav a:hover {
+  background: red;
+  color: white;
+  text-decoration: none;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}

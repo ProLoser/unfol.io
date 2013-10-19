@@ -1,0 +1,82 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+//@import "compass/reset";
+@import "compass/css3";
+
+body{
+	background:#FFF;
+}
+
+//HEADER
+header{
+	background: #444;
+	color: #FFF;
+	border-bottom: 2px solid red;
+	margin: 0 0 10px 0;
+	
+	.logo{
+		font-size: 22px;
+		margin-top: 20px;
+	}
+	nav{
+		text-align: right;
+		a{
+			border-left: 1px solid transparent;
+			border-right: 1px solid transparent;
+			color: #FFF;			
+			display: inline-block;
+			padding: 20px 10px;
+			
+			&:hover{
+				background: black;
+				color: white;
+				text-decoration: none;
+				border-left: 1px solid red;
+				border-right: 1px solid red;
+			}
+		}
+	}
+}
+
+//CONTENT
+div.content.container{
+	padding: 20px;
+	
+	h1{
+		font-size: 22px;
+		text-transform: uppercase;
+	}
+}
+//FOOTER
+footer{
+	background: #444;
+	color: #FFF;
+	border-top: 2px solid red;
+	margin: 10px 0 0;
+	
+	.copyright{
+		font-size: 10px;
+		margin-top: 20px;
+	}
+	nav{
+		text-align: right;
+		a{
+			border-left: 1px solid transparent;
+			border-right: 1px solid transparent;
+			color: #FFF;			
+			display: inline-block;
+			padding: 20px 10px;
+			
+			&:hover{
+				background: red;
+				color: white;
+				text-decoration: none;
+				border-left: 1px solid black;
+				border-right: 1px solid black;
+			}
+		}
+	}
+}
