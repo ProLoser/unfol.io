@@ -20,6 +20,10 @@ module.exports.policies = {
 
   'auth': {
   	'*': true
+  },
+  
+  'item':{
+	  '*': 'isAuthenticated'
   }
 
   /*
