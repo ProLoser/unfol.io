@@ -52,6 +52,7 @@ module.exports = {
 		});
 	},
 	githubQuery : function(req, res){
+		console.log(req.user);
 		github.read(tokens, 'repos', {},  function(error, repos){
 			if(error){
 				res.send('ERROR! '+error.data);
@@ -75,7 +76,6 @@ module.exports = {
 	},
 	
 	linkedinQuery: function(req, res){
-		console.log(linkedin.read);
 		linkedin.read(linkedinTokens, 'people', { url: 'http://www.linkedin.com/in/royboy789' }, function(error, repos){
 			if(error){
 				res.send('ERROR! '+error.data);

@@ -16,7 +16,7 @@ module.exports = {
         });
         res.send(err);
       }
-      req.logIn(user, function(err) {
+      req.login(user, function(err) {
         if (err) res.send(err);
         return res.send({
           message: 'login successful'
