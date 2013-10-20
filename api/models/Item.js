@@ -17,7 +17,7 @@ module.exports = {
   		type: 'string',
   		required: true
   	},
-  	type: 'string',
+  	type: 'string', //REPOSITORY, SCHOOL, POSITION
   	category_id: 'string',
   	related: 'json',
   	published: 'boolean',
