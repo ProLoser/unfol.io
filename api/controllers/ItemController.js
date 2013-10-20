@@ -53,14 +53,15 @@ module.exports = {
 		
 		Item.findOne(item1).done(function(err,item){
 			if(err) return res.send(err);
-			if(~item.related.indexOf(item2)){
-				_.without(item.related, item2);
+			if(!!~item.related.indexOf(item2)){
+				console.log('here'); 
+				item.related = _.without(item.related, item2);
 				item.save(function(err){
 					if(err) return res.send(err);
 					Item.findOne(item2).done(function(err,item){
 						if(err) return res.send(err);
-						if(~item.related.indexOf(item1)){
-							_.without(item.related, item1);
+						if(!!~item.related.indexOf(item1)){
+							item.related = _.without(item.related, item1);
 							item.save(function(err){
 								if(err) return res.send(err);
 								res.send('done');
