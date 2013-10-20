@@ -17,8 +17,8 @@ var callback = 'http://localhost:1337/network/callback?network=';
 
 var networks = {};
 
-_.each(keys, function(network){
-	networks[network] = resteasy('resteasy/lib/providers/' + networks, keys[network], callback + network);
-});
+for (network in networks) {
+	networks[network] = resteasy('resteasy/lib/providers/' + network, keys[network], callback + network);
+}
 
 module.exports = networks;

@@ -17,7 +17,7 @@
 
 
 
-var network = require('./api/services/network');
+var network = require('./../services/network');
 
 module.exports = {
 	connect : function(req, res){

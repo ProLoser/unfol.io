@@ -15,7 +15,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var network = require('./api/services/network');
+var network = require('./../services/network');
 
 module.exports = {
     
@@ -95,7 +95,7 @@ module.exports = {
 				}
 			});
 		});
-	}
+	},
 
 
   /**
