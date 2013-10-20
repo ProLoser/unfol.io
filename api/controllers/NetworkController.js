@@ -27,18 +27,24 @@ module.exports = {
 		network[req.query.network].callback(req, function(err, oauth_token, oauth_token_secret, params){
 			if (err) return res.send('Failed callback to: '+req.query.network);
 
-			var keys = {};
-			keys[req.query.network] = {
+			var keys = {
 				oauth_token: oauth_token,
 				oauth_token_secret: oauth_token_secret
 			};
 
-			User.update({
-				user_id: req.session.passport.user
-			}, {
-				keys: keys
-			}, function(err, doc){
-				res.redirect('/parser/'+req.query.network);
+			// Lookup a user
+			User.findOne(1).done(function(err, user) {
+
+				// we now have a model with instance methods attached
+				// update an attribute value
+				user.keys[req.query.network] = keys
+
+				// save the updated value
+				user.save(function(err) {
+					// value has been saved
+					res.redirect('/parser/'+req.query.network);
+				});
+
 			});
 		});
 	}
