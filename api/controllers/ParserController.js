@@ -1,5 +1,5 @@
 /**
- * RestEasyController
+ * ParserController
  *
  * @module      :: Controller
  * @description	:: A set of functions called `actions`.
@@ -15,54 +15,14 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-
-var resteasy = require('resteasy');
-
-var gitKeys = {
-	login: '490074a2ebeecd8ff906',
-	pass: '2f7ad427fc8ae6362b400609008549feeeb9be3f'
-};
-
-var linkKeys = {
-	login: 'hm19mmytz1y3',
-	pass: 'VkPwjdK4ew0HxruC'
-};
-
-var callbackUrl = {
-	github: 'http://localhost:1337/RestEasy/githubCallback',
-	linkedin: 'http://localhost:1337/RestEasy/linkedinCallback', 
-}
-
-var github = resteasy('resteasy/lib/providers/github', gitKeys, callbackUrl.github);
-var linkedin = resteasy('resteasy/lib/providers/linkedin', linkKeys, callbackUrl.linkedin);
-
-var doneFunc = function(check){
-	if(check) return res.send('done');
-}
+var network = require('./api/services/network');
 
 module.exports = {
-	github : github.connect,
-	
-	githubCallback: function(req, res){
-		github.callback(req, function(error, oauth_token, oauth_token_secret, additionalParameters){
-			if(error) return res.send('Error' + error);
-		  	User.findOne(req.session.passport.user).done(function(err, user){
-		  		if(err) return res.send('ERROR '+err.data);
-		  		user.keys.github = {
-		  			oauth_token: oauth_token,
-		  			oauth_token_secret: oauth_token_secret	
-		  		};
-		  		user.save(function(err){
-			  		if(err) return res.send(err);
-			  		res.redirect('/RestEasy/githubQuery/');
-		  		});
-		  	});	
-		});
-	},
-	githubQuery : function(req, res){
+    
+    github : function(req, res){
 		User.findOne(req.session.passport.user).done(function(err,user){
 			if(err) return res.send('ERROR' + err.data);
-			github.read(user.keys.github, 'repos', {},  function(error, repos){
+			network.github.read(user.keys.github, 'repos', {},  function(error, repos){
 				if(error) return res.send('ERROR! '+error.data);
 				for(var i=0;i<repos.length;i++){
 					(function(repo){
@@ -86,29 +46,7 @@ module.exports = {
 		})
 	},
 	
-	linkedin: linkedin.connect,
-	
-	linkedinCallback: function(req, res){
-		User.findOne(req.session.passport.user).done(function(err,user){
-			if(err) return res.send('ERROR' + err.data);
-			linkedin.callback(req, function(error, oauth_token, oauth_token_secret, additionalParameters){
-				if(error) return res.send('Error' + error);
-			  	User.findOne(req.session.passport.user).done(function(err, user){
-			  		if(err) return res.send('ERROR '+err.data);
-			  		user.keys.linkedin = {
-			  			oauth_token: oauth_token,
-			  			oauth_token_secret: oauth_token_secret	
-			  		};
-			  		user.save(function(err){
-				  		if(err) return res.send(err);
-				  		res.redirect('/RestEasy/linkedinQuery/');
-			  		});
-			  	});
-			});
-		});
-	},
-	
-	linkedinQuery: function(req, res){
+	linkedin: function(req, res){
 		User.findOne(req.session.passport.user).done(function(err,user){
 			var setFields = {
 				'first-name' : true,
@@ -116,7 +54,7 @@ module.exports = {
 				'positions' : true,
 				'educations' : true
 			};
-			linkedin.read(user.keys.linkedin, 'people', { fields: setFields }, function(error, repos){
+			network.linkedin.read(user.keys.linkedin, 'people', { fields: setFields }, function(error, repos){
 				if(error){
 					res.send('ERROR! ',error.data);
 				} else {
@@ -158,13 +96,13 @@ module.exports = {
 			});
 		});
 	}
-	
+
 
   /**
    * Overrides for the settings in `config/controllers.js`
-   * (specific to RestEasyController)
+   * (specific to ParserController)
    */
-  //_config: {}
+  _config: {}
 
   
 };

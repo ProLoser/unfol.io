@@ -13,7 +13,8 @@
     "passport": "~0.1.17",
     "passport-local": "~0.1.6",
     "resteasy": "*",
-    "bcrypt": "~0.7.6"
+    "bcrypt": "~0.7.6",
+    "lodash": "~2.2.1"
   },
   "scripts": {
     "start": "node app.js",
