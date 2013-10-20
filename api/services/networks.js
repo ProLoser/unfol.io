@@ -17,7 +17,7 @@ var callback = 'http://localhost:1337/network/callback?network=';
 
 var networks = {};
 
-for (network in networks) {
+for (network in keys) {
 	networks[network] = resteasy('resteasy/lib/providers/' + network, keys[network], callback + network);
 }
 

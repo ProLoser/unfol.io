@@ -15,14 +15,14 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var network = require('./../services/network');
+var networks = require('./../services/networks');
 
 module.exports = {
     
     github : function(req, res){
 		User.findOne(req.session.passport.user).done(function(err,user){
 			if(err) return res.send('ERROR' + err.data);
-			network.github.read(user.keys.github, 'repos', {},  function(error, repos){
+			networks.github.read(user.keys.github, 'repos', {},  function(error, repos){
 				if(error) return res.send('ERROR! '+error.data);
 				for(var i=0;i<repos.length;i++){
 					(function(repo){
@@ -54,7 +54,7 @@ module.exports = {
 				'positions' : true,
 				'educations' : true
 			};
-			network.linkedin.read(user.keys.linkedin, 'people', { fields: setFields }, function(error, repos){
+			networks.linkedin.read(user.keys.linkedin, 'people', { fields: setFields }, function(error, repos){
 				if(error){
 					res.send('ERROR! ',error.data);
 				} else {

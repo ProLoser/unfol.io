@@ -17,14 +17,14 @@
 
 
 
-var network = require('./../services/network');
+var networks = require('./../services/networks');
 
 module.exports = {
-	connect : function(req, res){
-		network[req.query.network].connect(req, res);
+	connect : function(req, res){ // ?network=[networkName]
+		networks[req.query.network].connect(req, res);
 	},
-	callback: function(req, res){
-		network[req.query.network].callback(req, function(err, oauth_token, oauth_token_secret, params){
+	callback: function(req, res){ // ?network=[networkName]
+		networks[req.query.network].callback(req, function(err, oauth_token, oauth_token_secret, params){
 			if (err) return res.send('Failed callback to: '+req.query.network);
 
 			var keys = {
