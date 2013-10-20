@@ -47,13 +47,27 @@ module.exports = {
 	
 	githubCallback: function(req, res){
 		github.callback(req, function(error, oauth_token, oauth_token_secret, additionalParameters){
-		  tokens.oauth_token = oauth_token;
-		  tokens.oauth_token_secret = oauth_token_secret;
-		  res.send('succcess! or some shit');
+			console.log(oauth_token_secret);
+			if(error) return res.send('Error' + error);
+		  	User.findOne(req.session.passport.user).done(function(err, user){
+		  		if(err) return res.send('ERROR '+err.data);
+		  		user.keys.github = {
+		  			oauth_token: oauth_token,
+		  			oauth_token_secret: oauth_token_secret	
+		  		};
+		  		user.save(function(err){
+			  		if(err) return res.send(err);
+			  		res.redirect('/RestEasy/githubQuery/');
+		  		});
+		  	});		  	
 		});
 	},
 	githubQuery : function(req, res){
-		
+		User.findOne(req.session.passport.user).done(function(err,user){
+			if(err) return res.send('ERROR' + err.data);
+			tokens = user.keys.github;
+			console.log(tokens);
+		})
 		github.read(tokens, 'repos', {},  function(error, repos){
 			if(error) return res.send('ERROR! '+error.data);
 			
@@ -85,7 +99,7 @@ module.exports = {
 				
 			} //END FOR LOOP
 			res.send('done');	
-		});	
+		});
 	},
 	
 	linkedin: linkedin.connect,

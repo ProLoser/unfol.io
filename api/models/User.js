@@ -19,6 +19,12 @@ module.exports = {
       type: 'string',
       required: true
     },
+    keys: {
+    	type: 'json',
+    	defaultsTo: {}
+    	
+    },
+    
     toJSON: function() {
       var obj = this.toObject();
       delete obj.password;
