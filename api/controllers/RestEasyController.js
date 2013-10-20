@@ -28,18 +28,17 @@ var linkKeys = {
 	pass: 'VkPwjdK4ew0HxruC'
 };
 
-var tokens = {};
-
-var linkedinTokens = {};
-
 var callbackUrl = {
 	github: 'http://localhost:1337/RestEasy/githubCallback',
 	linkedin: 'http://localhost:1337/RestEasy/linkedinCallback', 
 }
 
 var github = resteasy('resteasy/lib/providers/github', gitKeys, callbackUrl.github);
-
 var linkedin = resteasy('resteasy/lib/providers/linkedin', linkKeys, callbackUrl.linkedin);
+
+var doneFunc = function(check){
+	if(check) return res.send('done');
+}
 
 module.exports = {
 
@@ -47,7 +46,6 @@ module.exports = {
 	
 	githubCallback: function(req, res){
 		github.callback(req, function(error, oauth_token, oauth_token_secret, additionalParameters){
-			console.log(oauth_token_secret);
 			if(error) return res.send('Error' + error);
 		  	User.findOne(req.session.passport.user).done(function(err, user){
 		  		if(err) return res.send('ERROR '+err.data);
@@ -59,67 +57,106 @@ module.exports = {
 			  		if(err) return res.send(err);
 			  		res.redirect('/RestEasy/githubQuery/');
 		  		});
-		  	});		  	
+		  	});	
 		});
 	},
 	githubQuery : function(req, res){
 		User.findOne(req.session.passport.user).done(function(err,user){
 			if(err) return res.send('ERROR' + err.data);
-			tokens = user.keys.github;
-			console.log(tokens);
+			github.read(user.keys.github, 'repos', {},  function(error, repos){
+				if(error) return res.send('ERROR! '+error.data);
+				for(var i=0;i<repos.length;i++){
+					(function(repo){
+						Item.create({
+							name: repo.name,
+							user_id: req.session.passport.user,
+							github_id: repo.id,
+							public_url: repo.html_url,
+							description: repo.description,
+							language: repo.language,
+							raw: repo
+						}).done(function(err, item){
+							if(err) return console.log(err);
+							console.log(repo.name+' Created!');
+						});
+					})(repos[i]);
+					
+				} //END FOR LOOP
+				res.send('done');	
+			});
 		})
-		github.read(tokens, 'repos', {},  function(error, repos){
-			if(error) return res.send('ERROR! '+error.data);
-			
-			for(var i=0;i<repos.length;i++){
-			
-				(function(repo){
-					Item.find({
-						public_url: repo.html_url
-					}).done(function(err, items){
-						if(items.length > 0){
-							console.log('ALREADY EXISTS');
-						} else {
-							if(typeof repo == 'string'){ repos = JSON.parse(repos); }
-							Item.create({
-								name: repo.name,
-								user_id: req.session.passport.user,
-								github_id: repo.id,
-								public_url: repo.html_url,
-								description: repo.description,
-								language: repo.language,
-								raw: repo
-							}).done(function(err, item){
-								if(err) return console.log(err);
-								console.log(repo.name+' Created!');
-							});
-						} //ENDIF - ITEM LENGTH
-					}); // END DONE FUNC
-				})(repos[i]);
-				
-			} //END FOR LOOP
-			res.send('done');	
-		});
 	},
 	
 	linkedin: linkedin.connect,
 	
 	linkedinCallback: function(req, res){
-		linkedin.callback(req, function(error, oauth_token, oauth_token_secret, additionalParameters){
-			linkedinTokens.oauth_token = oauth_token;
-			linkedinTokens.oauth_token_secret = oauth_token_secret;
-			res.send('success');
+		User.findOne(req.session.passport.user).done(function(err,user){
+			if(err) return res.send('ERROR' + err.data);
+			linkedin.callback(req, function(error, oauth_token, oauth_token_secret, additionalParameters){
+				if(error) return res.send('Error' + error);
+			  	User.findOne(req.session.passport.user).done(function(err, user){
+			  		if(err) return res.send('ERROR '+err.data);
+			  		user.keys.linkedin = {
+			  			oauth_token: oauth_token,
+			  			oauth_token_secret: oauth_token_secret	
+			  		};
+			  		user.save(function(err){
+				  		if(err) return res.send(err);
+				  		res.redirect('/RestEasy/linkedinQuery/');
+			  		});
+			  	});
+			});
 		});
-	
 	},
 	
 	linkedinQuery: function(req, res){
-		linkedin.read(linkedinTokens, 'people', { url: 'http://www.linkedin.com/in/royboy789' }, function(error, repos){
-			if(error){
-				res.send('ERROR! '+error.data);
-			} else {
-				res.send(repos)
-			}
+		User.findOne(req.session.passport.user).done(function(err,user){
+			var setFields = {
+				'first-name' : true,
+				'last-name' : true,
+				'positions' : true,
+				'educations' : true
+			};
+			linkedin.read(user.keys.linkedin, 'people', { fields: setFields }, function(error, repos){
+				if(error){
+					res.send('ERROR! ',error.data);
+				} else {
+					for(var i=0;i<repos.educations.values.length;i++){
+						(function(repo){
+							Item.create({
+								user_id: req.session.passport.user,
+								name: repo.schoolName,
+								school_id: repo.id,
+								startDate: repo.startDate,
+								endDate: repo.endDate
+								
+							}).done(function(err, item){
+								if(err) return console.log(err);
+								console.log(repo.schoolName+' Created!');
+							});
+						})(repos.educations.values[i]);
+					} //END FOR LOOP
+					
+					for(var j=0;j<repos.positions.values.length;j++){
+						(function(repo){
+							Item.create({
+								user_id: req.session.passport.user,
+								name: repo.company.name,
+								position_id: repo.id,
+								startDate: repo.startDate,
+								endDate: repo.endDate,
+								summary: repo.summary,
+								title: repo.title
+								
+							}).done(function(err, item){
+								if(err) return console.log(err);
+								console.log(repo.company.name+' Created!');
+							});
+						})(repos.positions.values[j]);
+					} //END FOR LOOP
+					res.send('done');
+				}
+			});
 		});
 	}
 	

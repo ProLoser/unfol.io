@@ -9,14 +9,29 @@
 module.exports = {
 
   attributes: {
-  	
-  	name: 'string',
+  	user_id: { 
+  		type: 'string',
+  		required: true
+	},
+  	name: {
+  		type: 'string',
+  		required: true
+  	},
   	type: 'string',
-  	user_id: 'string',
   	category_id: 'string',
   	related: 'json',
   	published: 'boolean',
     raw: 'json'
+  },
+  
+  beforeCreate: function(values, next){
+	  Item.find({
+		  user_id: values.user_id,
+		  name: values.name,
+	  }).done(function(err, user){
+		  if(user.length <= 0){
+			  next();
+		  }
+	  });
   }
-
 };
