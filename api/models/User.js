@@ -24,6 +24,10 @@ module.exports = {
     	defaultsTo: {}
     	
     },
+    subdomain: {
+      type: 'string',
+      unique: true
+    },
     
     toJSON: function() {
       var obj = this.toObject();

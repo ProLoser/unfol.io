@@ -16,20 +16,20 @@ module.exports.policies = {
 
   // Default policy for all controllers and actions
   // (`true` allows public access) 
-  '*': true,
+  '*': 'isSubdomain',
 
   'auth': {
-  	'*': true
+  	'*': 'isSubdomain'
   },
   
   'item':{
-	  '*': 'isAuthenticated'
+	  '*': ['isAuthenticated','isSubdomain']
   },
   'Network':{
-	  '*': 'isAuthenticated'
+	  '*': ['isAuthenticated','isSubdomain']
   },
   'Parser':{
-	  '*': 'isAuthenticated'
+	  '*': ['isAuthenticated','isSubdomain']
   }
   
   /*
