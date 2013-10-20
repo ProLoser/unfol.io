@@ -48,7 +48,32 @@ module.exports = {
 	},
 	
 	disown: function(req, res){
-		 
+		var item1 = req.params.id1
+		var item2 = req.params.id2
+		
+		Item.findOne(item1).done(function(err,item){
+			if(err) return res.send(err);
+			if(~item.related.indexOf(item2)){
+				_.without(item.related, item2);
+				item.save(function(err){
+					if(err) return res.send(err);
+					Item.findOne(item2).done(function(err,item){
+						if(err) return res.send(err);
+						if(~item.related.indexOf(item1)){
+							_.without(item.related, item1);
+							item.save(function(err){
+								if(err) return res.send(err);
+								res.send('done');
+							});
+						}
+					});	
+				});
+			} else {
+				res.send('already not related');
+			}
+			
+		});
+		
 	},
 
    _config: {}

@@ -51,6 +51,10 @@ module.exports.routes = {
 	controller: 'ItemController',
 	action: 'relate'  
   },
+  '/item/disown/:id1/:id2':{
+	controller: 'ItemController',
+	action: 'disown'  
+  },
   
   
   /*
