@@ -34,6 +34,8 @@ module.exports = {
 						public_url: repo.html_url,
 						description: repo.description,
 						language: repo.language,
+						type: 'project',
+						network: 'github',
 						raw: repo
 					}).done(function(err, item){
 						if(err) return console.log(err);
@@ -62,7 +64,9 @@ module.exports = {
 						name: edu.schoolName,
 						school_id: edu.id,
 						startDate: edu.startDate,
-						endDate: edu.endDate
+						endDate: edu.endDate,
+						type: 'education',
+						network: 'linkedin'
 						
 					}).done(function(err, item){
 						if(err) return console.log(err);
@@ -78,7 +82,9 @@ module.exports = {
 						startDate: job.startDate,
 						endDate: job.endDate,
 						summary: job.summary,
-						title: job.title
+						title: job.title,
+						type: 'position',
+						network: 'linkedin'
 						
 					}).done(function(err, item){
 						if(err) return console.log(err);
@@ -103,7 +109,9 @@ module.exports = {
 						github_id: image.id,
 						public_url: image.link,
 						image_src: image.images.standard_resolution,
-						caption: image.caption.text
+						caption: image.caption.text,
+						type: 'image/media',
+						network: 'instagram'
 					}).done(function(err, item){
 						if(err) return console.log(err);
 						console.log('Image Created!');

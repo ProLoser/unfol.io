@@ -17,7 +17,11 @@ module.exports = {
   		type: 'string',
   		required: true
   	},
-  	type: 'string', //REPOSITORY, SCHOOL, POSITION
+  	type: {
+  		type: 'string', //PROJECT, SCHOOL, POSITION
+  		required: true
+  	},
+  	network: 'string',
   	category_id: 'string',
   	related: 'json',
   	published: 'boolean',
