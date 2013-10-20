@@ -41,7 +41,6 @@ var doneFunc = function(check){
 }
 
 module.exports = {
-
 	github : github.connect,
 	
 	githubCallback: function(req, res){
