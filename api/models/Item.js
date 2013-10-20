@@ -23,7 +23,10 @@ module.exports = {
   	},
   	network: 'string',
   	category_id: 'string',
-  	related: 'json',
+  	related: {
+  		defaultsTo: [],
+  		type: 'array',
+  	},
   	published: 'boolean',
     raw: 'json'
   },

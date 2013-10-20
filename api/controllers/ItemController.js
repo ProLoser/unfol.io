@@ -15,16 +15,43 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var _ = require('lodash');
+
 module.exports = {
-    
-  
 
+	relate : function(req, res){
+		var item1 = req.params.id1
+		var item2 = req.params.id2
+		
+		Item.findOne(item1).done(function(err,item){
+			if(err) return res.send(err);
+			if(!~item.related.indexOf(item2)){
+				item.related.push(item2);	
+				item.save(function(err){
+					if(err) return res.send(err);
+					Item.findOne(item2).done(function(err,item){
+						if(err) return res.send(err);
+						if(!~item.related.indexOf(item1)){
+							item.related.push(item1);
+							item.save(function(err){
+								if(err) return res.send(err);
+								res.send('done');		
+							});
+						}
+					});	
+				});
+			} else {
+				res.send('already related');
+			}
+			
+		});
+	},
+	
+	disown: function(req, res){
+		 
+	},
 
-  /**
-   * Overrides for the settings in `config/controllers.js`
-   * (specific to ItemController)
-   */
-  _config: {}
+   _config: {}
 
   
 };
