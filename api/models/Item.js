@@ -15,8 +15,8 @@ module.exports = {
   	user_id: 'string',
   	category_id: 'string',
   	related: 'json',
-  	published: 'boolean'
-    
+  	published: 'boolean',
+    raw: 'json'
   }
 
 };

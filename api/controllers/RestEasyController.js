@@ -15,6 +15,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+
 var resteasy = require('resteasy');
 
 var gitKeys = {
@@ -52,16 +53,39 @@ module.exports = {
 		});
 	},
 	githubQuery : function(req, res){
-		console.log(req.user);
+		
 		github.read(tokens, 'repos', {},  function(error, repos){
-			if(error){
-				res.send('ERROR! '+error.data);
-			} else {
-				res.send(repos);
-			}
-		});
-		
-		
+			if(error) return res.send('ERROR! '+error.data);
+			
+			for(var i=0;i<repos.length;i++){
+			
+				(function(repo){
+					Item.find({
+						public_url: repo.html_url
+					}).done(function(err, items){
+						if(items.length > 0){
+							console.log('ALREADY EXISTS');
+						} else {
+							if(typeof repo == 'string'){ repos = JSON.parse(repos); }
+							Item.create({
+								name: repo.name,
+								user_id: req.session.passport.user,
+								github_id: repo.id,
+								public_url: repo.html_url,
+								description: repo.description,
+								language: repo.language,
+								raw: repo
+							}).done(function(err, item){
+								if(err) return console.log(err);
+								console.log(repo.name+' Created!');
+							});
+						} //ENDIF - ITEM LENGTH
+					}); // END DONE FUNC
+				})(repos[i]);
+				
+			} //END FOR LOOP
+			res.send('done');	
+		});	
 	},
 	
 	linkedin: linkedin.connect,

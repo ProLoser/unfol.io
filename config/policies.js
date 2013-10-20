@@ -24,8 +24,11 @@ module.exports.policies = {
   
   'item':{
 	  '*': 'isAuthenticated'
+  },
+  'RestEasy':{
+	  '*': 'isAuthenticated'
   }
-
+  
   /*
 	// Here's an example of adding some policies to a controller
 	RabbitController: {
