@@ -17,7 +17,7 @@ module.exports = function (req, res, next) {
 		User.findOne({ subdomain: host[0] }).done(function(err, user){
 			if (err) return res.send('Subdomain not found');
 			delete user.keys;
-			req.session.owner = user;
+			req.owner = user;
 			next()
 		})
 	} else {
