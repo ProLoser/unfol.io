@@ -31,6 +31,8 @@ module.exports = {
 	  }).done(function(err, user){
 		  if(user.length <= 0){
 			  next();
+		  } else {
+			  return err;
 		  }
 	  });
   }

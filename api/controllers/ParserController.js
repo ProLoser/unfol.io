@@ -15,6 +15,8 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var _ = require('lodash');
+
 var networks = require('./../services/networks');
 
 module.exports = {
@@ -24,23 +26,20 @@ module.exports = {
 			if(err) return res.send('ERROR' + err.data);
 			networks.github.read(user.keys.github, 'repos', {},  function(error, repos){
 				if(error) return res.send('ERROR! '+error.data);
-				for(var i=0;i<repos.length;i++){
-					(function(repo){
-						Item.create({
-							name: repo.name,
-							user_id: req.session.passport.user,
-							github_id: repo.id,
-							public_url: repo.html_url,
-							description: repo.description,
-							language: repo.language,
-							raw: repo
-						}).done(function(err, item){
-							if(err) return console.log(err);
-							console.log(repo.name+' Created!');
-						});
-					})(repos[i]);
-					
-				} //END FOR LOOP
+				_.each(repos, function(repo){
+					Item.create({
+						name: repo.name,
+						user_id: req.session.passport.user,
+						github_id: repo.id,
+						public_url: repo.html_url,
+						description: repo.description,
+						language: repo.language,
+						raw: repo
+					}).done(function(err, item){
+						if(err) return console.log(err);
+						console.log(repo.name+' Created!');
+					});
+				});
 				res.send('done');	
 			});
 		})
@@ -54,47 +53,66 @@ module.exports = {
 				'positions' : true,
 				'educations' : true
 			};
-			networks.linkedin.read(user.keys.linkedin, 'people', { fields: setFields }, function(error, repos){
-				if(error){
-					res.send('ERROR! ',error.data);
-				} else {
-					for(var i=0;i<repos.educations.values.length;i++){
-						(function(repo){
-							Item.create({
-								user_id: req.session.passport.user,
-								name: repo.schoolName,
-								school_id: repo.id,
-								startDate: repo.startDate,
-								endDate: repo.endDate
-								
-							}).done(function(err, item){
-								if(err) return console.log(err);
-								console.log(repo.schoolName+' Created!');
-							});
-						})(repos.educations.values[i]);
-					} //END FOR LOOP
-					
-					for(var j=0;j<repos.positions.values.length;j++){
-						(function(repo){
-							Item.create({
-								user_id: req.session.passport.user,
-								name: repo.company.name,
-								position_id: repo.id,
-								startDate: repo.startDate,
-								endDate: repo.endDate,
-								summary: repo.summary,
-								title: repo.title
-								
-							}).done(function(err, item){
-								if(err) return console.log(err);
-								console.log(repo.company.name+' Created!');
-							});
-						})(repos.positions.values[j]);
-					} //END FOR LOOP
-					res.send('done');
-				}
+			networks.linkedin.read(user.keys.linkedin, 'people', { fields: setFields }, function(error, data){
+				if(error) return res.send('ERROR! ',error.data);
+				
+				_.each(data.educations.values, function(edu){
+					Item.create({
+						user_id: req.session.passport.user,
+						name: edu.schoolName,
+						school_id: edu.id,
+						startDate: edu.startDate,
+						endDate: edu.endDate
+						
+					}).done(function(err, item){
+						if(err) return console.log(err);
+						console.log(edu.schoolName+' Created!');
+					});
+				});
+				
+				_.each(data.positions.values, function(job){
+					Item.create({
+						user_id: req.session.passport.user,
+						name: job.company.name,
+						position_id: job.id,
+						startDate: job.startDate,
+						endDate: job.endDate,
+						summary: job.summary,
+						title: job.title
+						
+					}).done(function(err, item){
+						if(err) return console.log(err);
+						console.log(job.company.name+' Created!');
+					});
+				});
+				res.send('done');
 			});
 		});
+	},
+	instagram : function(req, res){
+		User.findOne(req.session.passport.user).done(function(err,user){
+			if(err) return res.send('ERROR' + err.data);
+			
+			networks.instagram.read(user.keys.instagram, 'media', {},  function(error, media){
+				if(error) return res.send(error.data);
+				
+				_.each(media.data, function(image){
+					Item.create({
+						user_id: req.session.passport.user,
+						name: 'image'+image.id,
+						github_id: image.id,
+						public_url: image.link,
+						image_src: image.images.standard_resolution,
+						caption: image.caption.text
+					}).done(function(err, item){
+						if(err) return console.log(err);
+						console.log('Image Created!');
+					});
+				});
+				
+				res.send('done');	
+			});
+		}); // END USER FIND
 	},
 
 

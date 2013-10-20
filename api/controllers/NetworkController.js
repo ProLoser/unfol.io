@@ -33,7 +33,7 @@ module.exports = {
 			};
 
 			// Lookup a user
-			User.findOne(1).done(function(err, user) {
+			User.findOne(req.session.passport.user).done(function(err, user) {
 
 				// we now have a model with instance methods attached
 				// update an attribute value

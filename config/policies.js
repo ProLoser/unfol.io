@@ -25,7 +25,10 @@ module.exports.policies = {
   'item':{
 	  '*': 'isAuthenticated'
   },
-  'RestEasy':{
+  'Network':{
+	  '*': 'isAuthenticated'
+  },
+  'Parser':{
 	  '*': 'isAuthenticated'
   }
   

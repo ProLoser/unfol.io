@@ -37,12 +37,12 @@ module.exports.adapters = {
     module   : 'resteasy',
     appId    : '490074a2ebeecd8ff906',
     appSecret: '2f7ad427fc8ae6362b400609008549feeeb9be3f',
-    callback : 'http://localhost:1337/RestEasy/githubCallback'
+    callback : 'http://localhost:1337/network/callback?network=github'
   },
   linkedin: {
     module   : 'resteasy',
     appId    : '490074a2ebeecd8ff906',
     appSecret: '2f7ad427fc8ae6362b400609008549feeeb9be3f',
-    callback : 'http://localhost:1337/RestEasy/githubCallback'
+    callback : 'http://localhost:1337/network/callback?network=linkedin'
   }
 };

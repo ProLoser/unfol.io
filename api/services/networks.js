@@ -2,6 +2,7 @@
 var _ = require('lodash');
 var resteasy = require('resteasy');
 
+//ADD NEW KEY OBJECT
 var keys = {
 	github: {
 		login: '490074a2ebeecd8ff906',
@@ -10,6 +11,10 @@ var keys = {
 	linkedin: {
 		login: 'hm19mmytz1y3',
 		pass: 'VkPwjdK4ew0HxruC'
+	},
+	instagram: {
+		login: 'e829032af87b47bc910fbdf5067e2783',
+		pass: 'd8c5522bb8e2434494b886f3a213027a'
 	}
 };
 
