@@ -1,4 +1,6 @@
-angular.module('unfolio', ['user', 'item', 'ui.router']).config(function ($stateProvider, $urlRouterProvider) {
+var unfolio = angular.module('unfolio', ['user', 'item', 'ui.router']);
+
+unfolio.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider.state('home', {
         url: '/',
         templateUrl: 'modules/home.html',
@@ -7,10 +9,16 @@ angular.module('unfolio', ['user', 'item', 'ui.router']).config(function ($state
     	templateUrl: 'modules/user/default.html'
     }).state('item', {
     	url: '/item',
-    	templateUrl: 'modules/item/default.html'
+    	templateUrl: 'modules/item/default.html',
+    	controller: 'ItemCtrl'
+    }).state('item.item', {
+    	url: '/:item',
+    	templateUrl: 'modules/item/single.html',
+    	controller: 'ItemSingleCtrl'
     }).state('category', {
     	url: '/category',
     	templateUrl: 'modules/category/default.html'
     });
     $urlRouterProvider.otherwise('/');
-})
+    
+});
