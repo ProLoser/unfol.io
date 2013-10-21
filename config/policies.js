@@ -23,7 +23,9 @@ module.exports.policies = {
   },
   
   'item':{
-	  '*': ['isAuthenticated','isSubdomain']
+	  '*': ['isSubdomain'],
+	  'relate': ['isAuthenticated'],
+	  'disown': ['isAuthenticated']
   },
   'Network':{
 	  '*': ['isAuthenticated','isSubdomain']

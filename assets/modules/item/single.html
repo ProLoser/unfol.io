@@ -1,35 +1,53 @@
-<div ng-switch="item.type">
-	<div ng-switch-when="image/media">
-		<h1>Photo</h1>
-		<img src="{{item.image_src.url}}" />
-	</div>
-	<div ng-switch-when="position">
-		<h1>{{item.name}}</h1>
-		<dl>
-			<dt>Start Date</dt><dd>{{item.startDate.month}} / {{item.startDate.year}}
-			<dt>End Date</dt><dd>{{item.endDate.month}} / {{item.endDate.year}}
-		</dl>
-	</div>
-	<div ng-switch-default>
-		DEFAULT!
-	</div>
-</div>	
-<h2>RELATED ITEMS</h2>
-<div ng-repeat="item in item.related" ng-switch="item.type">
-	<div ng-switch-when="image/media">
-		<a href="/#/item/{{item.id}}">
+<div ng-hide="item">
+	<p>Pick item on the left to view details</p>
+</div>
+<div ng-show="item">
+	<div ng-switch="item.type">
+		<div ng-switch-when="image/media">
+			<h1>Photo</h1>
 			<img src="{{item.image_src.url}}" />
-		</a>
+		</div>
+		<div ng-switch-when="position">
+			<h1>{{item.name}}</h1>
+			<dl>
+				<dt>Start Date</dt><dd>{{item.startDate.month}} / {{item.startDate.year}}
+				<dt>End Date</dt><dd>{{item.endDate.month}} / {{item.endDate.year}}
+			</dl>
+		</div>
+		<div ng-switch-default>
+			DEFAULT!
+		</div>
+	</div>	
+	<h2>ITEM OBJECT:</h2>
+	<pre>
+		{{item | json}}
+	</pre>
+	<h2>RELATED ITEMS</h2>
+	<div class="row">
+		<div ng-repeat="itemr in item.related" ng-switch="itemr.type">
+			<div ng-switch-when="image/media" class="col-sm-4">
+				<a href="/#/item/{{itemr.id}}" class="thumbnail">
+					<img src="{{itemr.image_src.url}}" width="100%" />
+				</a>
+				<button ng-click="disown(item.id, itemr.id, $index)">Delete</button>
+			</div>
+			<div ng-switch-default class="col-sm-4">
+				<h3>Name: {{itemr.name}}</h3>
+				<h4>Type: {{itemr.type}}</h4>
+				<a href="/#/item/{{item.id}}">Full Details</a>
+				<button ng-click="disown(item.id, itemr.id, $index)">Delete</button>
+			</div>
+		</div>
 	</div>
-	<div ng-switch-when="position">
-		<h2>{{item.name}}</h2>
-		<a href="/#/item/{{item.id}}">Full Details</a>
-	</div>
-	<div ng-switch-default>
-		DEFAULT!
+	<h2>ADD RELATED</h2>
+	<div class="row">
+		<div class="col-sm-6">
+			<strong>Current Item:</strong> {{item.id}}
+		</div>
+		<div class="col-sm-6">
+			<select ng-model="ItemSingleCtrl" name="add-relation" ng-change="relate(item.id)" id="add-relation">
+				<option ng-repeat="item in filtered" value="{{item.id}}">{{item.name}} - {{item.type}}</option>
+			</select>
+		</div>
 	</div>
 </div>
-
-<pre>
-	{{item.related | json}}
-</pre>

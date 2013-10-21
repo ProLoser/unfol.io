@@ -17,8 +17,16 @@
 
 module.exports = {
     
-  
-
+	currentUser: function(req, res){
+		var host = req.rawHost.split('.');
+		if (host.length > 1) {
+			User.findOne({ subdomain: host[0] }).done(function(err, user){
+				if (err) return res.send('Subdomain not found');
+				delete user.keys;
+				res.send(user);
+			})
+		}
+	},
 
   /**
    * Overrides for the settings in `config/controllers.js`

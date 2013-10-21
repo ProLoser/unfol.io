@@ -1,40 +1,90 @@
 var unfolio = angular.module('item', ['item.core', 'item.project', ]);
 
-var apiURL = 'http://roy.unfolio:1337';
 
-unfolio.factory('Items', function($http){
+
+unfolio.run(function($http, $rootScope){
+
+	$http.get('/User/currentUser/').then(function(response){
+		$rootScope.currentUser = response.data;
+		
+	});
+
+});
+
+unfolio.factory('Items', function($http, $rootScope){
 	var domain = '';
 	return {
-		getToken: function(method) {
-			return $http.g(MyAjax.resturl+'/get_nonce', method, {
-			    params: {
-			    	controller: 'posts',
-			    	method: method
-			    }
-		    }).then(function(response){
-		    	return response.data.nonce;
-		    });	
-		},
-		'get': function(item){
-			return $http.get(apiURL+'/item/show/'+item).then(function(response){
-				console.log(response.data);
+		'getOne': function(item){
+			return $http.get('/item/show/'+item).then(function(response){
 		    	return response.data;
 		    });
+		},
+		'getAll': function(item){
+			return $http.get('/item/', {
+				params: {
+					user_id: $rootScope.currentUser.id
+				}
+			}).then(function(response){
+		    	return response.data;
+		    });
+		},
+		'relate': function(item1, item2){
+			return $http.get('/item/relationship/'+item1+'/'+item2).then(function(response){
+				return response.data;
+			});
+		},
+		'disown': function(item1, item2){
+			return $http.get('/item/disown/'+item1+'/'+item2).then(function(response){
+				return response.data;
+			});
 		},
 	}
 });
 
 function ItemCtrl($scope, $http, Items, $stateParams){
 	
-	//Items.get($scope.item);
+	Items.getAll($stateParams.item).then(function(res){
+		$scope.items = res;
+	})
 	
 };
 
 function ItemSingleCtrl($scope, $http, Items, $stateParams){
-	$scope.related = {};
 	
-	Items.get($stateParams.item).then(function(res){
+	//GET ONE
+	Items.getOne($stateParams.item).then(function(res){
 		$scope.item = res;
 	});
+	
+	//RELATE
+	$scope.relate = function(item1){
+		Items.relate(item1, $('select#add-relation').val()).then(function(res){
+			console.log(res);
+			Items.getOne($('select#add-relation').val()).then(function(res){
+				$scope.item.related.push(res);
+			});
+		});
+	};
+	
+	//DISOWN
+	$scope.disown = function(item1, item2, index){
+		Items.disown(item1, item2).then(function(res){
+			console.log(res);
+			$scope.item.related.splice(index,1);
+		});
+	};
+	
+	//GET ALL AND FIND DIFF OF RELATED
+	Items.getAll($stateParams.item).then(function(res){
+		$scope.allItems = res;
+		
+		Items.getOne($stateParams.item).then(function(res){
+			$scope.item = res;
+			
+			$scope.filtered = _.rest($scope.allItems, function(itemb){
+				return _.find($scope.item.related, {id: itemb.id});
+			});
+		});
+	})
 	
 }
