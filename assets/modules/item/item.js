@@ -16,11 +16,8 @@ unfolio.factory('Items', function($http){
 		    });	
 		},
 		'get': function(item){
-			return $http.get(apiURL+'/item', {
-			    params: {
-			    	id: item
-			    }
-		    }).then(function(response){
+			return $http.get(apiURL+'/item/show/'+item).then(function(response){
+				console.log(response.data);
 		    	return response.data;
 		    });
 		},
@@ -38,12 +35,6 @@ function ItemSingleCtrl($scope, $http, Items, $stateParams){
 	
 	Items.get($stateParams.item).then(function(res){
 		$scope.item = res;
-		
-		for(var i=0;i<$scope.item.related.length;i++){
-			Items.get($scope.item.related[i]).then(function(res){
-				$scope.related[i] = res;
-			});
-		};
 	});
 	
 }

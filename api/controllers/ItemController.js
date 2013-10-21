@@ -24,13 +24,10 @@ module.exports = {
 			user_id: req.owner.id,
 			id: req.params.id
 		}).done(function(err, item){
-			var related = item.related;
-			_.map(item.related, function(id){
+			var related = _.map(item.related, function(id){
 				return { id: id };
 			});
-			Item.find({
-				or: related
-			}).done(function(err, items){
+			Item.find().where({ related: item.id }).done(function(err, items){
 				item.related = items;
 				res.send(item);
 			});

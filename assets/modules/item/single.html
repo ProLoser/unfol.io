@@ -1,7 +1,10 @@
 <div ng-switch="item.type">
-	<img ng-switch-when="image/media" src="{{item.image_src.url}}" />
+	<div ng-switch-when="image/media">
+		<h1>Photo</h1>
+		<img src="{{item.image_src.url}}" />
+	</div>
 	<div ng-switch-when="position">
-		<h2>{{item.name}}</h2>
+		<h1>{{item.name}}</h1>
 		<dl>
 			<dt>Start Date</dt><dd>{{item.startDate.month}} / {{item.startDate.year}}
 			<dt>End Date</dt><dd>{{item.endDate.month}} / {{item.endDate.year}}
@@ -11,15 +14,22 @@
 		DEFAULT!
 	</div>
 </div>	
-<div ng-repeat="{{related in related}}">
+<h2>RELATED ITEMS</h2>
+<div ng-repeat="item in item.related" ng-switch="item.type">
+	<div ng-switch-when="image/media">
+		<a href="/#/item/{{item.id}}">
+			<img src="{{item.image_src.url}}" />
+		</a>
+	</div>
 	<div ng-switch-when="position">
-		<h2>{{related.name}}</h2>
-		<dl>
-			<dt>Start Date</dt><dd>{{item.startDate.month}} / {{item.startDate.year}}
-			<dt>End Date</dt><dd>{{item.endDate.month}} / {{item.endDate.year}}
-		</dl>
+		<h2>{{item.name}}</h2>
+		<a href="/#/item/{{item.id}}">Full Details</a>
+	</div>
+	<div ng-switch-default>
+		DEFAULT!
 	</div>
 </div>
+
 <pre>
-	{{related | json}}
+	{{item.related | json}}
 </pre>
