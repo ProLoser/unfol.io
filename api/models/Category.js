@@ -10,9 +10,18 @@ module.exports = {
 
   attributes: {
   	
-  	name: 'string',
-  	type: 'string',
-  	user_id: 'string'
+  	name: { 
+  		type: 'string',
+  		required: true
+	},
+  	type: { 
+  		type: 'string',
+  		required: true
+	},
+  	user_id:  { 
+  		type: 'string',
+  		required: true
+	}
     
   }
 
