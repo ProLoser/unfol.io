@@ -19,6 +19,24 @@ var _ = require('lodash');
 
 module.exports = {
 
+	show: function(req, res) {
+		Item.findOne({
+			user_id: req.owner.id,
+			id: req.params.id
+		}).done(function(err, item){
+			var related = item.related;
+			_.map(item.related, function(id){
+				return { id: id };
+			});
+			Item.find({
+				or: related
+			}).done(function(err, items){
+				item.related = items;
+				res.send(item);
+			});
+		});
+	},
+
 	relate : function(req, res){
 		var item1 = req.params.id1
 		var item2 = req.params.id2

@@ -47,13 +47,17 @@ module.exports.routes = {
     controller: 'AuthController',
     action: 'logout'
   },
+  '/item/show/:id': {
+    controller: 'ItemController',
+    action: 'show'
+  },
   '/item/relationship/:id1/:id2':{
-	controller: 'ItemController',
-	action: 'relate'  
+  	controller: 'ItemController',
+  	action: 'relate'  
   },
   '/item/disown/:id1/:id2':{
-	controller: 'ItemController',
-	action: 'disown'  
+  	controller: 'ItemController',
+  	action: 'disown'  
   },
   
   
