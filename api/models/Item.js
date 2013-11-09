@@ -17,6 +17,7 @@ module.exports = {
   		type: 'string',
   		required: true
   	},
+    description: 'string',
   	type: {
   		type: 'string', //PROJECT, SCHOOL, POSITION
   		required: true
