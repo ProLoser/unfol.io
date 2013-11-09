@@ -15,7 +15,7 @@ module.exports = function (req, res, next) {
 	var host = req.rawHost.split('.');
 	if (host.length > 1) {
 		User.findOne({ subdomain: host[0] }).done(function(err, user){
-			if (err) return res.send('Subdomain not found');
+			if (err || !user) return res.send('Subdomain not found');
 			delete user.keys;
 			req.owner = user;
 			next()
