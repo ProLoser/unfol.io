@@ -59,7 +59,7 @@ function ItemSingleCtrl($scope, $http, Items, $stateParams){
 	//RELATE
 	$scope.relate = function(item1){
 		Items.relate(item1, $('select#add-relation').val()).then(function(res){
-			console.log(res);
+			if(res !== 'done') { return console.log('please login'); }
 			Items.getOne($('select#add-relation').val()).then(function(res){
 				$scope.item.related.push(res);
 			});
@@ -69,7 +69,7 @@ function ItemSingleCtrl($scope, $http, Items, $stateParams){
 	//DISOWN
 	$scope.disown = function(item1, item2, index){
 		Items.disown(item1, item2).then(function(res){
-			console.log(res);
+			if(res !== 'done') { return console.log('please login'); }
 			$scope.item.related.splice(index,1);
 		});
 	};

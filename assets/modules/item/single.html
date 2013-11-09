@@ -5,7 +5,7 @@
 	<div ng-switch="item.type">
 		<div ng-switch-when="image/media">
 			<h1>Photo</h1>
-			<img src="{{item.image_src.url}}" />
+			<img ng-src="{{item.image_src.url}}" />
 		</div>
 		<div ng-switch-when="position">
 			<h1>{{item.name}}</h1>
@@ -18,23 +18,19 @@
 			DEFAULT!
 		</div>
 	</div>	
-	<h2>ITEM OBJECT:</h2>
-	<pre>
-		{{item | json}}
-	</pre>
 	<h2>RELATED ITEMS</h2>
 	<div class="row">
 		<div ng-repeat="itemr in item.related" ng-switch="itemr.type">
 			<div ng-switch-when="image/media" class="col-sm-4">
-				<a href="/#/item/{{itemr.id}}" class="thumbnail">
-					<img src="{{itemr.image_src.url}}" width="100%" />
+				<a ng-href="/#/item/{{itemr.id}}" class="thumbnail">
+					<img ng-src="{{itemr.image_src.url}}" width="100%" />
 				</a>
 				<button ng-click="disown(item.id, itemr.id, $index)">Delete</button>
 			</div>
 			<div ng-switch-default class="col-sm-4">
 				<h3>Name: {{itemr.name}}</h3>
 				<h4>Type: {{itemr.type}}</h4>
-				<a href="/#/item/{{item.id}}">Full Details</a>
+				<a ng-href="/#/item/{{item.id}}">Full Details</a>
 				<button ng-click="disown(item.id, itemr.id, $index)">Delete</button>
 			</div>
 		</div>

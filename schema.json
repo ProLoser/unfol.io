@@ -1,0 +1,39 @@
+{
+	user: {
+		'keys': {
+			'API-HOST': {
+				'oauth_token' : INT,
+				'oauth_token_secret': INT
+			}
+		},
+		'subdomain': string,
+		'username': string,
+		'createdAt': timeStamp,
+		'updatedAt': timeStamp,
+		'id': INT
+	},
+	item: {
+		'user_id': INT, // OWNER OF ITEM,
+		'type': string, // EDUCATION | PROJECT | IMAGE/MEDIA
+		'related' : [], // ARRAY OF ID's
+		'name': string, // REPO | SCHOOL | EMPLOYER | 'IMAGE'+INSTAGRAM ID
+		'public_url': string,
+		'network': string, // API-HOST
+		'description': string, // GITHUB
+		'github_id': INT, // GITHUB & INSTAGRAM (ID)
+		'language': string, // GITHUB
+		'raw': object, //GITHUB
+		'school_id': INT, // LINKEDIN
+		'startDate': timeStamp, // LINKEDIN
+		'endDate': timeStamp, // LINKEDIN
+		'position_id': INT, // LINKEDIN
+		'summary': string, // LINKEDIN - JOB SUMMARY
+		'title': string, // LINKEDIN - JOB TITLE
+		'image_src': object, // INSTAGRAM
+		'caption': string, // INSTAGRAM
+		'createdAt': timeStamp,
+		'updatedAt': timeStamp,
+		'id': INT
+	}
+
+}
