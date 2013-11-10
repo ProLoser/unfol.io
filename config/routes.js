@@ -47,6 +47,10 @@ module.exports.routes = {
     controller: 'AuthController',
     action: 'logout'
   },
+  '/item': {
+	controller: 'ItemController',
+	action: 'allItems'  
+  },
   '/item/show/:id': {
     controller: 'ItemController',
     action: 'show'

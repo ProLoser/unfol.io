@@ -18,6 +18,10 @@ unfolio.config(function ($stateProvider, $urlRouterProvider) {
     }).state('category', {
     	url: '/category',
     	templateUrl: 'modules/category/default.html'
+    }).state('resume', {
+    	url: '/resume',
+    	templateUrl: 'modules/resume/default.html',
+    	controller: 'ResumeCtrl'
     });
     $urlRouterProvider.otherwise('/');
     
