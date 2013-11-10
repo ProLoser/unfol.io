@@ -16,8 +16,9 @@
  */
 
 var _ = require('lodash');
+var Base = require('./BaseController');
 
-module.exports = {
+module.exports = _.extend({}, Base, {
 
 	show: function(req, res) {
 		Item.findOne({
@@ -98,4 +99,4 @@ module.exports = {
    _config: {}
 
   
-};
+});
