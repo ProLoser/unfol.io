@@ -47,7 +47,11 @@ module.exports.routes = {
     controller: 'AuthController',
     action: 'logout'
   },
-  '/item': {
+  'get /item': {
+	controller: 'ItemController',
+	action: 'testAction'  
+  },
+  '/item/all': {
 	controller: 'ItemController',
 	action: 'allItems'  
   },

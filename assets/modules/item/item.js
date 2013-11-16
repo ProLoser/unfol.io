@@ -20,11 +20,7 @@ unfolio.factory('Items', function($http, $rootScope){
 		    });
 		},
 		'getAll': function(item){
-			return $http.get('/item/', {
-				params: {
-					user_id: $rootScope.currentUser.id
-				}
-			}).then(function(response){
+			return $http.get('/item/all').then(function(response){
 		    	return response.data;
 		    });
 		},

@@ -20,6 +20,38 @@ var Base = require('./BaseController');
 
 module.exports = _.extend({}, Base, {
 
+	testAction: function(req,res){
+		Item.find({
+			user_id: req.owner.id
+		}).done(function(err, item){
+			if(err) return res.send(err);
+			if(item){
+				var related = _.map(item.related, function(id){
+					return { id: id };
+				});
+				Item.find().where({ related: item.id }).done(function(err, items){
+					item.related = items;
+					res.send(item);
+				});
+			};
+		});
+	},
+	allItems: function(req,res){
+		Item.find({
+			user_id: req.owner.id
+		}).done(function(err, item){
+			if(err) return res.send(err);
+			if(item){
+				var related = _.map(item.related, function(id){
+					return { id: id };
+				});
+				Item.find().where({ related: item.id }).done(function(err, items){
+					item.related = items;
+					res.send(item);
+				});
+			};
+		});
+	},
 	show: function(req, res) {
 		Item.findOne({
 			user_id: req.owner.id,

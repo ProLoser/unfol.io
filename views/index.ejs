@@ -18,12 +18,23 @@
 			<div class="container">
 				<div class="row">
 					<div class="logo col-sm-3">UNFOL.IO</div>
-					<nav class="col-sm-9">
+					<nav class="col-sm-8">
 						<a href="#">Home</a>
 						<a href="#/user">User Module</a>
 						<a href="#/item">Item Module</a>
 						<a href="#/category">Category Module</a>
 					</nav>
+					<div class="col-sm-1">
+						<a href="#" data-toggle="modal" data-taget="#login">
+							login
+						</a>
+						<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<form ng-controller="LoginCtrl">
+								<input type="text" name="username" />
+								<input type="password" name="password" />
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
 		</header>

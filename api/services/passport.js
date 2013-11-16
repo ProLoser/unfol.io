@@ -13,6 +13,7 @@ function findById(id, fn) {
 }
  
 function findByUsername(u, fn) {
+	console.log('username'+u);
   User.findOne({
     username: u
   }).done(function (err, user) {

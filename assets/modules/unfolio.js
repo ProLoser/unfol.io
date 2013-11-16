@@ -26,3 +26,7 @@ unfolio.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
     
 });
+
+function LoginCtrl($scope){
+	
+}
