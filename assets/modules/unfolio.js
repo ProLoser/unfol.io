@@ -27,6 +27,25 @@ unfolio.config(function ($stateProvider, $urlRouterProvider) {
     
 });
 
-function LoginCtrl($scope){
+function LoginCtrl($scope, $http){
+	$scope.creds = {};
+
+	$scope.login = function(){
+		$('#loginForm').hide();
+		$('.ajaxLoader').show();
+		$http.post('/login', { 	
+			'username' : $scope.creds.username,
+			'password' : $scope.creds.pass
+		}).then(function(res){
+			$scope.creds = {};
+			$('.ajaxLoader').hide();
+			if(res.data.login){
+				$('p.loginSuccess').show();
+			} else {
+				$('p.loginError').show();
+				$('#loginForm').show();
+			}
+		});
+	}
 	
 }

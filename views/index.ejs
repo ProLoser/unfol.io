@@ -7,7 +7,8 @@
 		<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 		<!-- CSS -->
 		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
-		<link href="styles/unfolio/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+		<link href="styles/unfolio/stylesheets/screen.css?v=1" media="screen, projection" rel="stylesheet" type="text/css" />
+		<link href="styles/unfolio/sass/screen.css?v=1" media="screen, projection" rel="stylesheet" type="text/css" />
 		<link href="styles/unfolio/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
 		<!--[if IE]>
 		<link href="styles/unfolio/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -25,22 +26,43 @@
 						<a href="#/category">Category Module</a>
 					</nav>
 					<div class="col-sm-1">
-						<a href="#" data-toggle="modal" data-taget="#login">
+						<button class="btn btn-primary" data-toggle="modal" data-target="#login">
 							login
-						</a>
-						<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-							<form ng-controller="LoginCtrl">
-								<input type="text" name="username" />
-								<input type="password" name="password" />
-							</form>
-						</div>
+						</button>
 					</div>
 				</div>
 			</div>
 		</header>
 		
 		<div class="container content" ui-view></div>
-		
+		<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labeledby="loginLabel" aria-hidden="true">
+			<div class="modal-dialog" ng-controller="LoginCtrl">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+					</div>
+					<div class="modal-body">
+						<p class="loginSuccess" style="display:none">Thank you for logging in</p>
+						<p class="loginError" style="display:none">Your username or password does not match our records...bummer</p>
+			        	<form role="form" ng-submit="login()" id="loginForm">
+			        		<div class="form-group">
+				        		<label for="username">Username</label>
+				        		<input type="text" name="username" class="form-control" ng-model="creds.username" />
+			        		</div>
+			        		<div class="form-group">
+				        		<label for="password">Password</label>
+				        		<input type="password" name="password" class="form-control" ng-model="creds.pass" />
+			        		</div>
+			        		<div class="form-group">
+				        		<button type="submit" class="btn btn-default">login</button>
+			        		</div>
+			        	</form>
+			        	<img src="images/ajax-loader.gif" style="display:none;" class="ajaxLoader" />
+					</div>
+				</div>
+			</div>
+		</div>
 		<footer>
 			<div class="container">
 				<div class="row">
@@ -62,6 +84,7 @@
 		<script type="text/javascript" src="modules/item/item.js"></script>
 		<script type="text/javascript" src="modules/item/project/project.js"></script>
 		<!--BOOTSTRAP -->
+		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
 		<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 		<!--LODASH -->
