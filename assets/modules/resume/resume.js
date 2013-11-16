@@ -1,4 +1,4 @@
-angular.module('user', ['ui.router'])
+var unfolio = angular.module('resume', ['ngResource', 'ui.router'])
 
 unfolio.run(function($http, $rootScope){
 
@@ -14,3 +14,7 @@ unfolio.factory('Resume', function($http, $resource, $rootScope){
 		update: {method: 'PUT'}
 	});
 });
+
+function ResumeCtrl($scope, $http, Resume){
+	$scope.items = Resume.query();
+}

@@ -127,6 +127,13 @@ module.exports = _.extend({}, Base, {
 		});
 		
 	},
+	typeSort: function(req, res){
+		var type = req.params.type;
+		if(type == 'media') type = 'image/media';
+		Item.find().where({ type: type }).done(function(err, items){
+			res.send(items);
+		});
+	},
 
    _config: {}
 

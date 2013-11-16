@@ -51,6 +51,10 @@ module.exports.routes = {
 	controller: 'ItemController',
 	action: 'testAction'  
   },
+  'get /item/type/:type':{
+	controller: 'ItemController',
+	action: 'typeSort'  
+  },
   '/item/all': {
 	controller: 'ItemController',
 	action: 'allItems'  

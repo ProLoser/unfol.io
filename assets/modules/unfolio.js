@@ -1,4 +1,4 @@
-var unfolio = angular.module('unfolio', ['user', 'item', 'ui.router']);
+var unfolio = angular.module('unfolio', ['user', 'item', 'resume', 'ui.router']);
 
 unfolio.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider.state('home', {
