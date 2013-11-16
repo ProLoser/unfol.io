@@ -10,11 +10,12 @@ unfolio.run(function($http, $rootScope){
 });
 
 unfolio.factory('Resume', function($http, $resource, $rootScope){
-	return $resource('/item/', {'user_id': $rootScope.currentUser}, {
+	return $resource('/item/type/:type', {'user_id': $rootScope.currentUser, type: '@type'}, {
 		update: {method: 'PUT'}
 	});
 });
 
 function ResumeCtrl($scope, $http, Resume){
-	$scope.items = Resume.query();
+	$scope.education = Resume.query({type: 'education'});
+	$scope.positions = Resume.query({type: 'position'});
 }

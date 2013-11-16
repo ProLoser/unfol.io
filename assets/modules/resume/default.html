@@ -1,5 +1,27 @@
 <h1>Resume</h1>
 
-<pre>
-	{{ items || json}}
-</pre>
+<h2>EDUCATION</h2>
+<div class="row" ng-repeat="edu in education">
+	<div class="col-sm-4">
+			{{edu.name}}
+	</div>
+	<div class="col-sm-4">
+		{{edu.startDate.year}} - {{edu.endDate.year}}
+	</div>
+	<div class="col-sm-4">
+		{{edu.related}}
+	</div>
+</div>
+
+<h3>EXPERIENCE</h3>
+<div class="row" ng-repeat="job in positions">
+	<div class="col-sm-4">
+		{{job.name}}
+	</div>
+	<div class="col-sm-4">
+		{{job.startDate.month}} / {{job.startDate.year}} - {{job.startDate.month}} / {{job.endDate.year}}
+	</div>
+	<div class="col-sm-4">
+		{{job.related}}
+	</div>
+</div>
