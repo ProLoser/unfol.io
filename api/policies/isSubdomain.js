@@ -18,6 +18,8 @@ module.exports = function (req, res, next) {
 			if (err || !user) return res.send('Subdomain not found');
 			delete user.keys;
 			req.owner = user;
+			// Auto-decorate all Model queries with the user_id
+			req.query.user_id = user.id;
 			next()
 		})
 	} else {
