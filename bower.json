@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "homepage": "http://unfol.io",
   "authors": [
-    "Dean Sofer <proloser@hotmail.com>",
-    "Roy Sivan <roy@guavaworks.com>"
+    "Dean Sofer",
+    "Roy Sivan"
   ],
   "private": true,
   "dependencies": {
